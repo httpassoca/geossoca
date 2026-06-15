@@ -51,10 +51,11 @@ export function pointsPerGameSeries(players: Player[], games: Game[]): ChartSeri
   })
 }
 
-/** Podium distribution as grouped bars: one series per placement (1st…4th),
- *  one bar per player in each group. */
+/** Podium distribution as grouped bars: one series per PLAYER (in the player's
+ *  colour), one bar per placement (1st…4th) within each placement group. */
 export function podiumSeries(players: Player[], games: Game[]): ChartSeries[] {
   const placements = [1, 2, 3, 4]
+  const ordinal = ['1st', '2nd', '3rd', '4th']
   // counts[playerId][position] = number of finishes
   const counts = new Map<string, Record<number, number>>()
   for (const p of players) counts.set(p.id, {})
@@ -64,9 +65,9 @@ export function podiumSeries(players: Player[], games: Game[]): ChartSeries[] {
       if (c) c[position] = (c[position] ?? 0) + 1
     }
   }
-  const ordinal = ['1st', '2nd', '3rd', '4th']
-  return placements.map((pos) => ({
-    label: ordinal[pos - 1],
-    data: players.map((p) => ({ x: p.name, y: counts.get(p.id)?.[pos] ?? 0 })),
+  return players.map((p) => ({
+    label: p.name,
+    color: p.color,
+    data: placements.map((pos) => ({ x: ordinal[pos - 1], y: counts.get(p.id)?.[pos] ?? 0 })),
   }))
 }

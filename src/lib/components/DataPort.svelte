@@ -9,26 +9,42 @@
   const summary = $derived(pending ? summarize(pending) : '')
 
   function exportNow() {
-    downloadExport(store.data)
-    toast.success('Exported JSON')
+    try {
+      // snapshot: store.data is a $state proxy, not structured-cloneable as-is
+      downloadExport($state.snapshot(store.data))
+      toast.success('Exported JSON')
+    } catch (e) {
+      toast.error(`Export failed: ${(e as Error).message}`)
+    }
   }
 
   async function onfiles(files: File[]) {
     const file = files[0]
     if (!file) return
-    const res = await readImportFile(file)
-    if (res.ok) {
-      pending = res.data
-    } else {
-      toast.error(res.error)
+    try {
+      const res = await readImportFile(file)
+      if (res.ok) {
+        pending = res.data
+      } else {
+        toast.error(res.error)
+      }
+    } catch (e) {
+      toast.error(`Could not read file: ${(e as Error).message}`)
     }
   }
 
   function run(mode: ImportMode) {
     if (!pending) return
-    store.setData(applyImport(store.data, pending, mode))
-    toast.success(mode === 'replace' ? 'Data replaced' : 'Data merged')
-    pending = null
+    try {
+      // snapshot both sides to plain objects — applyImport deep-clones, which
+      // throws on Svelte's $state proxies.
+      const next = applyImport($state.snapshot(store.data), $state.snapshot(pending), mode)
+      store.setData(next)
+      toast.success(mode === 'replace' ? 'Data replaced' : 'Data merged')
+      pending = null
+    } catch (e) {
+      toast.error(`Import failed: ${(e as Error).message}`)
+    }
   }
 </script>
 

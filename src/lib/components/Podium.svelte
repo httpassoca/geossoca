@@ -25,7 +25,7 @@
     <p class="empty">—</p>
   {:else}
     <div class="stage">
-      {#each arranged as e (e.rank)}
+      {#each arranged as e, i (i)}
         <div class="col" data-rank={e.rank}>
           <PlayerTag name={e.name} color={e.color} px={36} />
           <span class="name">{e.name}</span>
