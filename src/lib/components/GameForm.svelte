@@ -14,18 +14,32 @@
 
   const today = () => new Date().toISOString().slice(0, 10)
 
-  let date = $state(today())
-  let scores = $state<Record<string, number | null>>({})
+  // Every player always has a (nullable) entry so `bind:value` is never bound to
+  // `undefined` — the Modal keeps its children mounted even while closed.
+  const blankScores = () =>
+    Object.fromEntries(store.data.players.map((p) => [p.id, null])) as Record<
+      string,
+      number | null
+    >
 
-  // (Re)initialise whenever the modal opens, from the edited game or blank.
+  let date = $state(today())
+  let scores = $state<Record<string, number | null>>(blankScores())
+
+  // Keep a key for any player added while this form is mounted.
   $effect(() => {
-    if (!open) return
-    date = game?.date ?? today()
-    const next: Record<string, number | null> = {}
-    for (const p of store.data.players) {
-      next[p.id] = game?.entries.find((e) => e.playerId === p.id)?.score ?? null
+    for (const p of store.data.players) if (!(p.id in scores)) scores[p.id] = null
+  })
+
+  // Load values from the edited game (or clear) each time the modal opens.
+  let prevOpen = false
+  $effect(() => {
+    if (open && !prevOpen) {
+      date = game?.date ?? today()
+      const next = blankScores()
+      for (const e of game?.entries ?? []) next[e.playerId] = e.score
+      scores = next
     }
-    scores = next
+    prevOpen = open
   })
 
   const entries = $derived<GameEntry[]>(
