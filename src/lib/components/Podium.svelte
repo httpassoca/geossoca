@@ -1,12 +1,11 @@
 <script lang="ts">
-  import PlayerTag from './PlayerTag.svelte'
-
   export interface PodiumEntry {
     name: string
-    color: string
     /** Pre-formatted value shown under the name (e.g. "12 pts" or "1.50 avg"). */
     value: string
     rank: number
+    /** Optional — no longer rendered (the podium is colour-free). */
+    color?: string
   }
   interface Props {
     title: string
@@ -27,10 +26,9 @@
     <div class="stage">
       {#each arranged as e, i (i)}
         <div class="col" data-rank={e.rank}>
-          <PlayerTag name={e.name} color={e.color} px={36} />
           <span class="name">{e.name}</span>
           <span class="value">{e.value}</span>
-          <div class="plinth" style="background:{e.color}">
+          <div class="plinth">
             <span class="medal">{e.rank}</span>
           </div>
         </div>
@@ -82,13 +80,14 @@
   .plinth {
     width: 100%;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
-    padding-top: var(--ss-s-1, 4px);
-    color: #0b0b0b;
+    background: var(--ss-bg-elev);
+    border: 1px solid var(--ss-line);
+    border-bottom: none;
+    color: var(--ss-fg);
     font-family: var(--ss-font-mono);
     font-weight: 700;
-    opacity: 0.9;
   }
   /* 1st tallest, then 2nd, then 3rd. */
   .col[data-rank='1'] .plinth {
@@ -101,7 +100,7 @@
     height: 36px;
   }
   .medal {
-    font-size: var(--ss-ui-xs);
+    font-size: var(--ss-size-h3, 1.25rem);
   }
   .empty {
     color: var(--ss-fg-faint);
