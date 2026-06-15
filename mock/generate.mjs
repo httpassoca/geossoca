@@ -1,5 +1,5 @@
 // Deterministic mock-data generator for geossoca.
-// A quarter (13 weeks) of GeoGuessr nights: 4 games/week, 4 players.
+// A quarter (13 weeks) of GeoGuessr nights: 4 games every Friday, 4 players.
 // Output matches AppData (version 1) and respects the rules:
 //   • scores are integers in [0, 50000]
 //   • scores are unique within each game (in-game ties are impossible)
@@ -40,15 +40,17 @@ function isoDate(d) {
 
 // 13 weeks, 4 nights each (Mon/Wed/Fri/Sun), starting Monday 2026-01-05.
 const start = new Date(Date.UTC(2026, 0, 5))
-const dayOffsets = [0, 2, 4, 6]
+const FRIDAY = 4 // offset from the Monday start
+const GAMES_PER_FRIDAY = 4
 
 const games = []
 let n = 0
 for (let week = 0; week < 13; week++) {
-  for (const off of dayOffsets) {
+  // four games on the same Friday night
+  for (let i = 0; i < GAMES_PER_FRIDAY; i++) {
     n++
     const d = new Date(start)
-    d.setUTCDate(start.getUTCDate() + week * 7 + off)
+    d.setUTCDate(start.getUTCDate() + week * 7 + FRIDAY)
 
     const used = new Set()
     const entries = players.map((p) => {

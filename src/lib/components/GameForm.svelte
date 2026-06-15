@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Modal, DateField, NumberField, Button, Badge, toast } from 'dssoca'
+  import { Modal, DateField, Input, Button, Badge, toast } from 'dssoca'
   import { store } from '$lib/store.svelte'
   import { positionsForGame } from '$lib/rankings'
   import type { Game, GameEntry } from '$lib/types'
@@ -15,17 +15,17 @@
 
   const today = () => new Date().toISOString().slice(0, 10)
 
-  // Every player always has a (nullable) entry so `bind:value` is never bound to
-  // `undefined` — the Modal keeps its children mounted even while closed.
+  // Scores are held as raw strings (the inputs are plain text-number fields, no
+  // steppers). Every player always has a key so `bind:value` is never undefined.
   const blankScores = () =>
-    Object.fromEntries(store.data.players.map((p) => [p.id, null])) as Record<string, number | null>
+    Object.fromEntries(store.data.players.map((p) => [p.id, ''])) as Record<string, string>
 
   let date = $state(today())
-  let scores = $state<Record<string, number | null>>(blankScores())
+  let scores = $state<Record<string, string>>(blankScores())
 
   // Keep a key for any player added while this form is mounted.
   $effect(() => {
-    for (const p of store.data.players) if (!(p.id in scores)) scores[p.id] = null
+    for (const p of store.data.players) if (!(p.id in scores)) scores[p.id] = ''
   })
 
   // Load values from the edited game (or clear) each time the modal opens.
@@ -34,23 +34,38 @@
     if (open && !prevOpen) {
       date = game?.date ?? today()
       const next = blankScores()
-      for (const e of game?.entries ?? []) next[e.playerId] = e.score
+      for (const e of game?.entries ?? []) next[e.playerId] = String(e.score)
       scores = next
     }
     prevOpen = open
   })
 
+  function parsed(id: string): number | null {
+    const raw = (scores[id] ?? '').trim()
+    if (raw === '') return null
+    const n = Number(raw)
+    return Number.isFinite(n) ? n : null
+  }
+
   const entries = $derived<GameEntry[]>(
     store.data.players
-      .filter((p) => scores[p.id] != null)
-      .map((p) => ({ playerId: p.id, score: scores[p.id] as number })),
+      .map((p) => ({ playerId: p.id, score: parsed(p.id) }))
+      .filter((e): e is GameEntry => e.score !== null),
   )
 
   const scoreValues = $derived(entries.map((e) => e.score))
   const hasDuplicate = $derived(new Set(scoreValues).size !== scoreValues.length)
-  const overCap = $derived(scoreValues.some((s) => s > SCORE_MAX))
+  const inRange = $derived(scoreValues.every((s) => s >= 0 && s <= SCORE_MAX))
   const preview = $derived(entries.length ? positionsForGame({ id: '', date, entries }) : [])
-  const canSave = $derived(entries.length >= 1 && !hasDuplicate && !overCap)
+  const canSave = $derived(entries.length >= 1 && !hasDuplicate && inRange)
+
+  function fieldError(id: string): string | undefined {
+    const n = parsed(id)
+    if (n === null) return undefined
+    if (n < 0) return 'must be 0 or more'
+    if (n > SCORE_MAX) return 'max 50,000'
+    return undefined
+  }
 
   function save() {
     if (!canSave) return
@@ -75,16 +90,15 @@
         <p class="hint">Add players first (Players tab).</p>
       {:else}
         {#each store.data.players as p (p.id)}
-          <NumberField
+          <Input
             label={p.name}
-            bind:value={scores[p.id]}
+            type="number"
+            inputmode="numeric"
             min={0}
             max={SCORE_MAX}
-            step={100}
+            bind:value={scores[p.id]}
             placeholder="—"
-            error={scores[p.id] != null && (scores[p.id] as number) > SCORE_MAX
-              ? 'max 50,000'
-              : undefined}
+            error={fieldError(p.id)}
           />
         {/each}
       {/if}
@@ -92,9 +106,6 @@
 
     {#if hasDuplicate}
       <p class="error">Two players can't have the same score — break the tie.</p>
-    {/if}
-    {#if overCap}
-      <p class="error">Scores can't exceed 50,000 (5 digits).</p>
     {/if}
 
     {#if preview.length}
@@ -141,6 +152,16 @@
     text-transform: uppercase;
     letter-spacing: 0.08em;
     color: var(--ss-fg-muted);
+  }
+  /* Plain number entry: no native spinner arrows (and no DS steppers). */
+  .scores :global(.ss-input)::-webkit-outer-spin-button,
+  .scores :global(.ss-input)::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  .scores :global(.ss-input[type='number']) {
+    appearance: textfield;
+    -moz-appearance: textfield;
   }
   .error {
     color: var(--ss-red);
