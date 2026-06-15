@@ -5,6 +5,8 @@
 export interface Player {
   id: string
   name: string
+  /** Identity colour (hex) — used for the avatar tag, podium, and chart series. */
+  color: string
   /** ISO timestamp. */
   createdAt: string
 }

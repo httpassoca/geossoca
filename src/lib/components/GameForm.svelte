@@ -4,6 +4,7 @@
   import { positionsForGame } from '$lib/rankings'
   import type { Game, GameEntry } from '$lib/types'
   import { posTone } from './posTone'
+  import { SCORE_MAX } from '$lib/palette'
 
   interface Props {
     open: boolean
@@ -17,10 +18,7 @@
   // Every player always has a (nullable) entry so `bind:value` is never bound to
   // `undefined` — the Modal keeps its children mounted even while closed.
   const blankScores = () =>
-    Object.fromEntries(store.data.players.map((p) => [p.id, null])) as Record<
-      string,
-      number | null
-    >
+    Object.fromEntries(store.data.players.map((p) => [p.id, null])) as Record<string, number | null>
 
   let date = $state(today())
   let scores = $state<Record<string, number | null>>(blankScores())
@@ -50,8 +48,9 @@
 
   const scoreValues = $derived(entries.map((e) => e.score))
   const hasDuplicate = $derived(new Set(scoreValues).size !== scoreValues.length)
+  const overCap = $derived(scoreValues.some((s) => s > SCORE_MAX))
   const preview = $derived(entries.length ? positionsForGame({ id: '', date, entries }) : [])
-  const canSave = $derived(entries.length >= 1 && !hasDuplicate)
+  const canSave = $derived(entries.length >= 1 && !hasDuplicate && !overCap)
 
   function save() {
     if (!canSave) return
@@ -80,8 +79,12 @@
             label={p.name}
             bind:value={scores[p.id]}
             min={0}
+            max={SCORE_MAX}
             step={100}
             placeholder="—"
+            error={scores[p.id] != null && (scores[p.id] as number) > SCORE_MAX
+              ? 'max 50,000'
+              : undefined}
           />
         {/each}
       {/if}
@@ -89,6 +92,9 @@
 
     {#if hasDuplicate}
       <p class="error">Two players can't have the same score — break the tie.</p>
+    {/if}
+    {#if overCap}
+      <p class="error">Scores can't exceed 50,000 (5 digits).</p>
     {/if}
 
     {#if preview.length}

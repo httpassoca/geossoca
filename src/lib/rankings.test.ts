@@ -3,10 +3,10 @@ import { positionsForGame, positionRanking, pointsRanking } from './rankings'
 import type { Game, Player } from './types'
 
 const players: Player[] = [
-  { id: 'a', name: 'Ada', createdAt: '' },
-  { id: 'b', name: 'Bob', createdAt: '' },
-  { id: 'c', name: 'Cy', createdAt: '' },
-  { id: 'd', name: 'Dot', createdAt: '' },
+  { id: 'a', name: 'Ada', color: '#66ef73', createdAt: '' },
+  { id: 'b', name: 'Bob', color: '#9aa4ff', createdAt: '' },
+  { id: 'c', name: 'Cy', color: '#b98cff', createdAt: '' },
+  { id: 'd', name: 'Dot', color: '#66d9ef', createdAt: '' },
 ]
 
 // Two games. g1: A>B>C>D. g2: B>A>C>D. → A and B both finish 1st once + 2nd once.
@@ -87,7 +87,10 @@ describe('pointsRanking', () => {
 
 describe('players who skip games', () => {
   it('only counts games a player actually played', () => {
-    const withGuest: Player[] = [...players, { id: 'e', name: 'Eve', createdAt: '' }]
+    const withGuest: Player[] = [
+      ...players,
+      { id: 'e', name: 'Eve', color: '#e0c36a', createdAt: '' },
+    ]
     const extra: Game[] = [
       ...games,
       { id: 'g3', date: '2026-01-03', entries: [{ playerId: 'e', score: 50 }] },

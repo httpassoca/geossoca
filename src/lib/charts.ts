@@ -18,7 +18,7 @@ export function cumulativePositionSeries(players: Player[], games: Game[]): Char
       sum += pos.position
       data.push({ x: i + 1, y: sum })
     })
-    return { label: p.name, data }
+    return { label: p.name, data, color: p.color }
   })
 }
 
@@ -34,7 +34,7 @@ export function cumulativePointsSeries(players: Player[], games: Game[]): ChartS
       sum += entry.score
       data.push({ x: i + 1, y: sum })
     })
-    return { label: p.name, data }
+    return { label: p.name, data, color: p.color }
   })
 }
 
@@ -47,7 +47,7 @@ export function pointsPerGameSeries(players: Player[], games: Game[]): ChartSeri
       const entry = game.entries.find((e) => e.playerId === p.id)
       if (entry) data.push({ x: i + 1, y: entry.score })
     })
-    return { label: p.name, data }
+    return { label: p.name, data, color: p.color }
   })
 }
 

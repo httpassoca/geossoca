@@ -10,8 +10,8 @@
   const tabs = [
     { id: 'games', label: 'Games', href: '/' },
     { id: 'rankings', label: 'Rankings', href: '/rankings' },
-    { id: 'players', label: 'Players', href: '/players' },
     { id: 'charts', label: 'Charts', href: '/charts' },
+    { id: 'players', label: 'Players', href: '/players' },
   ]
 
   const active = $derived.by(() => {

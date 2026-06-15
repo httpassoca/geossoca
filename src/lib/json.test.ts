@@ -5,8 +5,8 @@ import type { AppData } from './types'
 const valid: AppData = {
   version: 1,
   players: [
-    { id: 'a', name: 'Ada', createdAt: '2026-01-01T00:00:00.000Z' },
-    { id: 'b', name: 'Bob', createdAt: '2026-01-01T00:00:00.000Z' },
+    { id: 'a', name: 'Ada', color: '#66ef73', createdAt: '2026-01-01T00:00:00.000Z' },
+    { id: 'b', name: 'Bob', color: '#9aa4ff', createdAt: '2026-01-01T00:00:00.000Z' },
   ],
   games: [
     {
@@ -48,7 +48,7 @@ describe('validateData', () => {
 
   it('rejects duplicate player ids', () => {
     const dup = structuredClone(valid)
-    dup.players.push({ id: 'a', name: 'Clone', createdAt: '' })
+    dup.players.push({ id: 'a', name: 'Clone', color: '#fff', createdAt: '' })
     expect(validateData(dup).ok).toBe(false)
   })
 })
@@ -62,7 +62,7 @@ describe('summarize', () => {
 describe('applyImport', () => {
   const current: AppData = {
     version: 1,
-    players: [{ id: 'a', name: 'Ada', createdAt: '' }],
+    players: [{ id: 'a', name: 'Ada', color: '#66ef73', createdAt: '' }],
     games: [],
     settings: { theme: 'light' },
   }

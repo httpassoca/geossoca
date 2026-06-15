@@ -5,6 +5,7 @@
 import { browser } from '$app/environment'
 import { applyDesignConfig } from 'dssoca'
 import { emptyData, type AppData, type GameEntry, type Player, type Theme } from './types'
+import { pickColor } from './palette'
 
 const KEY = 'geossoca:data:v1'
 
@@ -27,6 +28,10 @@ class AppStore {
     } catch {
       // corrupt/missing → keep the empty default
     }
+    // Backfill colours for data saved before player colours existed.
+    this.data.players.forEach((p, i) => {
+      if (!p.color) p.color = pickColor(i)
+    })
     this.loaded = true
     this.applyTheme()
   }
@@ -42,7 +47,12 @@ class AppStore {
   // ── players ───────────────────────────────────────────────────────────────
 
   addPlayer(name: string): Player {
-    const player: Player = { id: uid(), name: name.trim(), createdAt: new Date().toISOString() }
+    const player: Player = {
+      id: uid(),
+      name: name.trim(),
+      color: pickColor(this.data.players.length),
+      createdAt: new Date().toISOString(),
+    }
     this.data.players.push(player)
     this.save()
     return player
@@ -52,6 +62,14 @@ class AppStore {
     const p = this.data.players.find((p) => p.id === id)
     if (p) {
       p.name = name.trim()
+      this.save()
+    }
+  }
+
+  setPlayerColor(id: string, color: string) {
+    const p = this.data.players.find((p) => p.id === id)
+    if (p) {
+      p.color = color
       this.save()
     }
   }

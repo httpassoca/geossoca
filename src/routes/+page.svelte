@@ -1,9 +1,11 @@
 <script lang="ts">
-  import { Heading, Button, MetricTile, EmptyState, Modal, toast } from 'dssoca'
+  import { Accordion, Heading, Button, MetricTile, EmptyState, Modal, Badge, toast } from 'dssoca'
   import { store } from '$lib/store.svelte'
-  import { chronological } from '$lib/rankings'
+  import { positionsForGame, chronological } from '$lib/rankings'
   import GameForm from '$lib/components/GameForm.svelte'
-  import GameCard from '$lib/components/GameCard.svelte'
+  import PlayerTag from '$lib/components/PlayerTag.svelte'
+  import { posTone } from '$lib/components/posTone'
+  import { reveal } from '$lib/motion'
   import type { Game } from '$lib/types'
 
   let formOpen = $state(false)
@@ -11,7 +13,35 @@
   let deleteTarget = $state<Game | undefined>(undefined)
 
   const gamesNewestFirst = $derived(chronological(store.data.games).reverse())
+  const gamesById = $derived(new Map(gamesNewestFirst.map((g) => [g.id, g])))
   const lastGameDate = $derived(gamesNewestFirst[0]?.date ?? '—')
+
+  function longDate(date: string) {
+    return new Date(date + 'T00:00:00').toLocaleDateString(undefined, {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    })
+  }
+  function winnerName(g: Game) {
+    const first = positionsForGame(g).find((r) => r.position === 1)
+    return first ? store.playerName(first.playerId) : '—'
+  }
+  function highScore(g: Game) {
+    return Math.max(...g.entries.map((e) => e.score)).toLocaleString()
+  }
+  function playerColor(playerId: string) {
+    return store.data.players.find((p) => p.id === playerId)?.color ?? '#888'
+  }
+
+  const items = $derived(
+    gamesNewestFirst.map((g) => ({
+      id: g.id,
+      label: longDate(g.date),
+      hint: `🏆 ${winnerName(g)} · ${highScore(g)}`,
+    })),
+  )
 
   function newGame() {
     editing = undefined
@@ -38,32 +68,67 @@
   </Button>
 </header>
 
-<section class="metrics">
+<section class="metrics" in:reveal={{ y: 10 }}>
   <MetricTile label="Games" value={store.data.games.length} />
   <MetricTile label="Players" value={store.data.players.length} />
   <MetricTile label="Last played" value={lastGameDate} />
 </section>
 
 {#if store.data.games.length === 0}
-  <EmptyState
-    title="No games yet"
-    message={store.data.players.length === 0
-      ? 'Add players first, then record your first game.'
-      : 'Record your first game to start tracking scores.'}
-    icon="∅"
-  >
-    {#snippet action()}
-      <Button variant="primary" onclick={newGame} disabled={store.data.players.length === 0}>
-        New game
-      </Button>
-    {/snippet}
-  </EmptyState>
+  <div in:reveal={{ y: 10, delay: 60 }}>
+    <EmptyState
+      title="No games yet"
+      message={store.data.players.length === 0
+        ? 'Add players first, then record your first game.'
+        : 'Record your first game to start tracking scores.'}
+      icon="∅"
+    >
+      {#snippet action()}
+        <Button variant="primary" onclick={newGame} disabled={store.data.players.length === 0}>
+          New game
+        </Button>
+      {/snippet}
+    </EmptyState>
+  </div>
 {:else}
-  <section class="games">
-    {#each gamesNewestFirst as game (game.id)}
-      <GameCard {game} onedit={() => editGame(game)} ondelete={() => (deleteTarget = game)} />
-    {/each}
-  </section>
+  <div in:reveal={{ y: 10, delay: 60 }}>
+    <Accordion {items} multiple headingLevel={2}>
+      {#snippet header(item)}
+        {@const g = gamesById.get(item.id)}
+        <div class="hd">
+          <span class="hd-date">{item.label}</span>
+          {#if g}
+            <span class="hd-meta">🏆 {winnerName(g)} · {highScore(g)}</span>
+          {/if}
+        </div>
+      {/snippet}
+
+      {#snippet panel(item)}
+        {@const g = gamesById.get(item.id)}
+        {#if g}
+          <ol class="rows">
+            {#each positionsForGame(g) as row (row.playerId)}
+              <li>
+                <Badge tone={posTone(row.position)} label={`Position ${row.position}`}>
+                  {row.position}
+                </Badge>
+                <PlayerTag
+                  name={store.playerName(row.playerId)}
+                  color={playerColor(row.playerId)}
+                />
+                <span class="name">{store.playerName(row.playerId)}</span>
+                <span class="score">{row.score.toLocaleString()}</span>
+              </li>
+            {/each}
+          </ol>
+          <div class="actions">
+            <Button variant="ghost" size="sm" onclick={() => editGame(g)}>Edit</Button>
+            <Button variant="ghost" size="sm" onclick={() => (deleteTarget = g)}>Delete</Button>
+          </div>
+        {/if}
+      {/snippet}
+    </Accordion>
+  </div>
 {/if}
 
 <GameForm bind:open={formOpen} game={editing} />
@@ -93,9 +158,40 @@
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: var(--ss-s-3, 12px);
   }
-  .games {
+  .hd {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ss-s-3, 12px);
+    flex: 1;
+  }
+  .hd-meta {
+    color: var(--ss-fg-muted);
+    font-family: var(--ss-font-mono);
+    white-space: nowrap;
+  }
+  .rows {
+    list-style: none;
+    margin: 0 0 var(--ss-s-3, 12px);
+    padding: 0;
     display: flex;
     flex-direction: column;
+    gap: var(--ss-s-2, 8px);
+  }
+  .rows li {
+    display: flex;
+    align-items: center;
     gap: var(--ss-s-3, 12px);
+  }
+  .name {
+    flex: 1;
+  }
+  .score {
+    font-family: var(--ss-font-mono);
+    color: var(--ss-fg-muted);
+  }
+  .actions {
+    display: flex;
+    gap: var(--ss-s-1, 4px);
   }
 </style>

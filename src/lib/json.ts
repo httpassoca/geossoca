@@ -4,6 +4,7 @@
 // browser helpers (download / read) are thin wrappers used by the UI.
 
 import { SCHEMA_VERSION, emptyData, type AppData, type Game, type Player } from './types'
+import { pickColor } from './palette'
 
 export type ImportMode = 'replace' | 'merge'
 
@@ -38,6 +39,7 @@ export function validateData(raw: unknown): ValidateResult {
     players.push({
       id: p.id,
       name: p.name,
+      color: typeof p.color === 'string' ? p.color : pickColor(players.length),
       createdAt: typeof p.createdAt === 'string' ? p.createdAt : new Date(0).toISOString(),
     })
   }
