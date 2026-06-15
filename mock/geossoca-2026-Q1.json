@@ -1,0 +1,1178 @@
+{
+  "version": 1,
+  "players": [
+    {
+      "id": "p1",
+      "name": "Ana",
+      "color": "#66ef73",
+      "createdAt": "2026-01-01T09:00:00.000Z"
+    },
+    {
+      "id": "p2",
+      "name": "Bruno",
+      "color": "#9aa4ff",
+      "createdAt": "2026-01-01T09:00:00.000Z"
+    },
+    {
+      "id": "p3",
+      "name": "Caio",
+      "color": "#b98cff",
+      "createdAt": "2026-01-01T09:00:00.000Z"
+    },
+    {
+      "id": "p4",
+      "name": "Duda",
+      "color": "#66d9ef",
+      "createdAt": "2026-01-01T09:00:00.000Z"
+    }
+  ],
+  "games": [
+    {
+      "id": "g0001",
+      "date": "2026-01-05",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 19800
+        },
+        {
+          "playerId": "p2",
+          "score": 21340
+        },
+        {
+          "playerId": "p3",
+          "score": 22250
+        },
+        {
+          "playerId": "p4",
+          "score": 22710
+        }
+      ]
+    },
+    {
+      "id": "g0002",
+      "date": "2026-01-07",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 24060
+        },
+        {
+          "playerId": "p2",
+          "score": 17090
+        },
+        {
+          "playerId": "p3",
+          "score": 18410
+        },
+        {
+          "playerId": "p4",
+          "score": 17140
+        }
+      ]
+    },
+    {
+      "id": "g0003",
+      "date": "2026-01-09",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 18250
+        },
+        {
+          "playerId": "p2",
+          "score": 18230
+        },
+        {
+          "playerId": "p3",
+          "score": 16830
+        },
+        {
+          "playerId": "p4",
+          "score": 21590
+        }
+      ]
+    },
+    {
+      "id": "g0004",
+      "date": "2026-01-11",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 17600
+        },
+        {
+          "playerId": "p2",
+          "score": 18430
+        },
+        {
+          "playerId": "p3",
+          "score": 22200
+        },
+        {
+          "playerId": "p4",
+          "score": 14950
+        }
+      ]
+    },
+    {
+      "id": "g0005",
+      "date": "2026-01-12",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 20590
+        },
+        {
+          "playerId": "p2",
+          "score": 18880
+        },
+        {
+          "playerId": "p3",
+          "score": 22710
+        },
+        {
+          "playerId": "p4",
+          "score": 15670
+        }
+      ]
+    },
+    {
+      "id": "g0006",
+      "date": "2026-01-14",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 25000
+        },
+        {
+          "playerId": "p2",
+          "score": 19540
+        },
+        {
+          "playerId": "p3",
+          "score": 21860
+        },
+        {
+          "playerId": "p4",
+          "score": 22540
+        }
+      ]
+    },
+    {
+      "id": "g0007",
+      "date": "2026-01-16",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 17960
+        },
+        {
+          "playerId": "p2",
+          "score": 21480
+        },
+        {
+          "playerId": "p3",
+          "score": 22100
+        },
+        {
+          "playerId": "p4",
+          "score": 17130
+        }
+      ]
+    },
+    {
+      "id": "g0008",
+      "date": "2026-01-18",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 25000
+        },
+        {
+          "playerId": "p2",
+          "score": 19340
+        },
+        {
+          "playerId": "p3",
+          "score": 16940
+        },
+        {
+          "playerId": "p4",
+          "score": 15880
+        }
+      ]
+    },
+    {
+      "id": "g0009",
+      "date": "2026-01-19",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 20390
+        },
+        {
+          "playerId": "p2",
+          "score": 24070
+        },
+        {
+          "playerId": "p3",
+          "score": 16910
+        },
+        {
+          "playerId": "p4",
+          "score": 16310
+        }
+      ]
+    },
+    {
+      "id": "g0010",
+      "date": "2026-01-21",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 20910
+        },
+        {
+          "playerId": "p2",
+          "score": 20940
+        },
+        {
+          "playerId": "p3",
+          "score": 16230
+        },
+        {
+          "playerId": "p4",
+          "score": 14060
+        }
+      ]
+    },
+    {
+      "id": "g0011",
+      "date": "2026-01-23",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 20790
+        },
+        {
+          "playerId": "p2",
+          "score": 23120
+        },
+        {
+          "playerId": "p3",
+          "score": 18210
+        },
+        {
+          "playerId": "p4",
+          "score": 16360
+        }
+      ]
+    },
+    {
+      "id": "g0012",
+      "date": "2026-01-25",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 18690
+        },
+        {
+          "playerId": "p2",
+          "score": 17420
+        },
+        {
+          "playerId": "p3",
+          "score": 21390
+        },
+        {
+          "playerId": "p4",
+          "score": 14650
+        }
+      ]
+    },
+    {
+      "id": "g0013",
+      "date": "2026-01-26",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 22270
+        },
+        {
+          "playerId": "p2",
+          "score": 24260
+        },
+        {
+          "playerId": "p3",
+          "score": 16220
+        },
+        {
+          "playerId": "p4",
+          "score": 16970
+        }
+      ]
+    },
+    {
+      "id": "g0014",
+      "date": "2026-01-28",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 19370
+        },
+        {
+          "playerId": "p2",
+          "score": 17870
+        },
+        {
+          "playerId": "p3",
+          "score": 15740
+        },
+        {
+          "playerId": "p4",
+          "score": 16200
+        }
+      ]
+    },
+    {
+      "id": "g0015",
+      "date": "2026-01-30",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 24800
+        },
+        {
+          "playerId": "p2",
+          "score": 17350
+        },
+        {
+          "playerId": "p3",
+          "score": 17140
+        },
+        {
+          "playerId": "p4",
+          "score": 14810
+        }
+      ]
+    },
+    {
+      "id": "g0016",
+      "date": "2026-02-01",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 25000
+        },
+        {
+          "playerId": "p2",
+          "score": 20180
+        },
+        {
+          "playerId": "p3",
+          "score": 19050
+        },
+        {
+          "playerId": "p4",
+          "score": 14020
+        }
+      ]
+    },
+    {
+      "id": "g0017",
+      "date": "2026-02-02",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 18600
+        },
+        {
+          "playerId": "p2",
+          "score": 23830
+        },
+        {
+          "playerId": "p3",
+          "score": 22040
+        },
+        {
+          "playerId": "p4",
+          "score": 21340
+        }
+      ]
+    },
+    {
+      "id": "g0018",
+      "date": "2026-02-04",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 22690
+        },
+        {
+          "playerId": "p2",
+          "score": 24940
+        },
+        {
+          "playerId": "p3",
+          "score": 20340
+        },
+        {
+          "playerId": "p4",
+          "score": 17910
+        }
+      ]
+    },
+    {
+      "id": "g0019",
+      "date": "2026-02-06",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 21370
+        },
+        {
+          "playerId": "p2",
+          "score": 19320
+        },
+        {
+          "playerId": "p3",
+          "score": 22920
+        },
+        {
+          "playerId": "p4",
+          "score": 19970
+        }
+      ]
+    },
+    {
+      "id": "g0020",
+      "date": "2026-02-08",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 20840
+        },
+        {
+          "playerId": "p2",
+          "score": 24210
+        },
+        {
+          "playerId": "p3",
+          "score": 15150
+        },
+        {
+          "playerId": "p4",
+          "score": 15450
+        }
+      ]
+    },
+    {
+      "id": "g0021",
+      "date": "2026-02-09",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 23980
+        },
+        {
+          "playerId": "p2",
+          "score": 19190
+        },
+        {
+          "playerId": "p3",
+          "score": 20200
+        },
+        {
+          "playerId": "p4",
+          "score": 18560
+        }
+      ]
+    },
+    {
+      "id": "g0022",
+      "date": "2026-02-11",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 25000
+        },
+        {
+          "playerId": "p2",
+          "score": 23630
+        },
+        {
+          "playerId": "p3",
+          "score": 21320
+        },
+        {
+          "playerId": "p4",
+          "score": 16400
+        }
+      ]
+    },
+    {
+      "id": "g0023",
+      "date": "2026-02-13",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 19030
+        },
+        {
+          "playerId": "p2",
+          "score": 16900
+        },
+        {
+          "playerId": "p3",
+          "score": 23880
+        },
+        {
+          "playerId": "p4",
+          "score": 19110
+        }
+      ]
+    },
+    {
+      "id": "g0024",
+      "date": "2026-02-15",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 24680
+        },
+        {
+          "playerId": "p2",
+          "score": 19890
+        },
+        {
+          "playerId": "p3",
+          "score": 20060
+        },
+        {
+          "playerId": "p4",
+          "score": 17280
+        }
+      ]
+    },
+    {
+      "id": "g0025",
+      "date": "2026-02-16",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 19760
+        },
+        {
+          "playerId": "p2",
+          "score": 21010
+        },
+        {
+          "playerId": "p3",
+          "score": 18690
+        },
+        {
+          "playerId": "p4",
+          "score": 21540
+        }
+      ]
+    },
+    {
+      "id": "g0026",
+      "date": "2026-02-18",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 17730
+        },
+        {
+          "playerId": "p2",
+          "score": 21630
+        },
+        {
+          "playerId": "p3",
+          "score": 15880
+        },
+        {
+          "playerId": "p4",
+          "score": 20580
+        }
+      ]
+    },
+    {
+      "id": "g0027",
+      "date": "2026-02-20",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 19170
+        },
+        {
+          "playerId": "p2",
+          "score": 19780
+        },
+        {
+          "playerId": "p3",
+          "score": 20630
+        },
+        {
+          "playerId": "p4",
+          "score": 16300
+        }
+      ]
+    },
+    {
+      "id": "g0028",
+      "date": "2026-02-22",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 23730
+        },
+        {
+          "playerId": "p2",
+          "score": 18920
+        },
+        {
+          "playerId": "p3",
+          "score": 17050
+        },
+        {
+          "playerId": "p4",
+          "score": 18750
+        }
+      ]
+    },
+    {
+      "id": "g0029",
+      "date": "2026-02-23",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 17710
+        },
+        {
+          "playerId": "p2",
+          "score": 19050
+        },
+        {
+          "playerId": "p3",
+          "score": 21040
+        },
+        {
+          "playerId": "p4",
+          "score": 21820
+        }
+      ]
+    },
+    {
+      "id": "g0030",
+      "date": "2026-02-25",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 24290
+        },
+        {
+          "playerId": "p2",
+          "score": 18220
+        },
+        {
+          "playerId": "p3",
+          "score": 15890
+        },
+        {
+          "playerId": "p4",
+          "score": 19130
+        }
+      ]
+    },
+    {
+      "id": "g0031",
+      "date": "2026-02-27",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 22290
+        },
+        {
+          "playerId": "p2",
+          "score": 16900
+        },
+        {
+          "playerId": "p3",
+          "score": 21740
+        },
+        {
+          "playerId": "p4",
+          "score": 14280
+        }
+      ]
+    },
+    {
+      "id": "g0032",
+      "date": "2026-03-01",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 21780
+        },
+        {
+          "playerId": "p2",
+          "score": 19840
+        },
+        {
+          "playerId": "p3",
+          "score": 17780
+        },
+        {
+          "playerId": "p4",
+          "score": 14510
+        }
+      ]
+    },
+    {
+      "id": "g0033",
+      "date": "2026-03-02",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 20850
+        },
+        {
+          "playerId": "p2",
+          "score": 24820
+        },
+        {
+          "playerId": "p3",
+          "score": 17950
+        },
+        {
+          "playerId": "p4",
+          "score": 19360
+        }
+      ]
+    },
+    {
+      "id": "g0034",
+      "date": "2026-03-04",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 21190
+        },
+        {
+          "playerId": "p2",
+          "score": 18590
+        },
+        {
+          "playerId": "p3",
+          "score": 20810
+        },
+        {
+          "playerId": "p4",
+          "score": 20270
+        }
+      ]
+    },
+    {
+      "id": "g0035",
+      "date": "2026-03-06",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 22880
+        },
+        {
+          "playerId": "p2",
+          "score": 19690
+        },
+        {
+          "playerId": "p3",
+          "score": 20640
+        },
+        {
+          "playerId": "p4",
+          "score": 14170
+        }
+      ]
+    },
+    {
+      "id": "g0036",
+      "date": "2026-03-08",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 24290
+        },
+        {
+          "playerId": "p2",
+          "score": 20730
+        },
+        {
+          "playerId": "p3",
+          "score": 16600
+        },
+        {
+          "playerId": "p4",
+          "score": 16190
+        }
+      ]
+    },
+    {
+      "id": "g0037",
+      "date": "2026-03-09",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 22080
+        },
+        {
+          "playerId": "p2",
+          "score": 23570
+        },
+        {
+          "playerId": "p3",
+          "score": 23560
+        },
+        {
+          "playerId": "p4",
+          "score": 15580
+        }
+      ]
+    },
+    {
+      "id": "g0038",
+      "date": "2026-03-11",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 19470
+        },
+        {
+          "playerId": "p2",
+          "score": 18830
+        },
+        {
+          "playerId": "p3",
+          "score": 18860
+        },
+        {
+          "playerId": "p4",
+          "score": 15180
+        }
+      ]
+    },
+    {
+      "id": "g0039",
+      "date": "2026-03-13",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 17930
+        },
+        {
+          "playerId": "p2",
+          "score": 18360
+        },
+        {
+          "playerId": "p3",
+          "score": 15440
+        },
+        {
+          "playerId": "p4",
+          "score": 14780
+        }
+      ]
+    },
+    {
+      "id": "g0040",
+      "date": "2026-03-15",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 23050
+        },
+        {
+          "playerId": "p2",
+          "score": 17680
+        },
+        {
+          "playerId": "p3",
+          "score": 19480
+        },
+        {
+          "playerId": "p4",
+          "score": 16030
+        }
+      ]
+    },
+    {
+      "id": "g0041",
+      "date": "2026-03-16",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 25000
+        },
+        {
+          "playerId": "p2",
+          "score": 16550
+        },
+        {
+          "playerId": "p3",
+          "score": 18250
+        },
+        {
+          "playerId": "p4",
+          "score": 20830
+        }
+      ]
+    },
+    {
+      "id": "g0042",
+      "date": "2026-03-18",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 23120
+        },
+        {
+          "playerId": "p2",
+          "score": 22540
+        },
+        {
+          "playerId": "p3",
+          "score": 22640
+        },
+        {
+          "playerId": "p4",
+          "score": 16890
+        }
+      ]
+    },
+    {
+      "id": "g0043",
+      "date": "2026-03-20",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 25000
+        },
+        {
+          "playerId": "p2",
+          "score": 16760
+        },
+        {
+          "playerId": "p3",
+          "score": 21530
+        },
+        {
+          "playerId": "p4",
+          "score": 14810
+        }
+      ]
+    },
+    {
+      "id": "g0044",
+      "date": "2026-03-22",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 22940
+        },
+        {
+          "playerId": "p2",
+          "score": 23650
+        },
+        {
+          "playerId": "p3",
+          "score": 21440
+        },
+        {
+          "playerId": "p4",
+          "score": 14590
+        }
+      ]
+    },
+    {
+      "id": "g0045",
+      "date": "2026-03-23",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 25000
+        },
+        {
+          "playerId": "p2",
+          "score": 22120
+        },
+        {
+          "playerId": "p3",
+          "score": 23880
+        },
+        {
+          "playerId": "p4",
+          "score": 14960
+        }
+      ]
+    },
+    {
+      "id": "g0046",
+      "date": "2026-03-25",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 18440
+        },
+        {
+          "playerId": "p2",
+          "score": 22440
+        },
+        {
+          "playerId": "p3",
+          "score": 21790
+        },
+        {
+          "playerId": "p4",
+          "score": 15360
+        }
+      ]
+    },
+    {
+      "id": "g0047",
+      "date": "2026-03-27",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 24220
+        },
+        {
+          "playerId": "p2",
+          "score": 18260
+        },
+        {
+          "playerId": "p3",
+          "score": 17920
+        },
+        {
+          "playerId": "p4",
+          "score": 21450
+        }
+      ]
+    },
+    {
+      "id": "g0048",
+      "date": "2026-03-29",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 22670
+        },
+        {
+          "playerId": "p2",
+          "score": 21090
+        },
+        {
+          "playerId": "p3",
+          "score": 19230
+        },
+        {
+          "playerId": "p4",
+          "score": 19010
+        }
+      ]
+    },
+    {
+      "id": "g0049",
+      "date": "2026-03-30",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 21380
+        },
+        {
+          "playerId": "p2",
+          "score": 20560
+        },
+        {
+          "playerId": "p3",
+          "score": 17800
+        },
+        {
+          "playerId": "p4",
+          "score": 16900
+        }
+      ]
+    },
+    {
+      "id": "g0050",
+      "date": "2026-04-01",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 25000
+        },
+        {
+          "playerId": "p2",
+          "score": 19720
+        },
+        {
+          "playerId": "p3",
+          "score": 16290
+        },
+        {
+          "playerId": "p4",
+          "score": 20390
+        }
+      ]
+    },
+    {
+      "id": "g0051",
+      "date": "2026-04-03",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 22270
+        },
+        {
+          "playerId": "p2",
+          "score": 21650
+        },
+        {
+          "playerId": "p3",
+          "score": 21000
+        },
+        {
+          "playerId": "p4",
+          "score": 18000
+        }
+      ]
+    },
+    {
+      "id": "g0052",
+      "date": "2026-04-05",
+      "entries": [
+        {
+          "playerId": "p1",
+          "score": 21480
+        },
+        {
+          "playerId": "p2",
+          "score": 22060
+        },
+        {
+          "playerId": "p3",
+          "score": 17820
+        },
+        {
+          "playerId": "p4",
+          "score": 15160
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "theme": "dark"
+  }
+}
