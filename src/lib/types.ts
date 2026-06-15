@@ -26,17 +26,25 @@ export interface Game {
 
 export type Theme = 'dark' | 'light'
 
+/** dssoca's size axis. */
+export type SizeVariant = 'sm' | 'md' | 'lg'
+
 /** The entire persisted state — the shape of the exported JSON file. */
 export interface AppData {
   version: 1
   players: Player[]
   games: Game[]
-  settings: { theme: Theme }
+  settings: { theme: Theme; sizeVariant: SizeVariant }
 }
 
 export const SCHEMA_VERSION = 1 as const
 
 /** A fresh, empty store. */
 export function emptyData(): AppData {
-  return { version: SCHEMA_VERSION, players: [], games: [], settings: { theme: 'dark' } }
+  return {
+    version: SCHEMA_VERSION,
+    players: [],
+    games: [],
+    settings: { theme: 'dark', sizeVariant: 'md' },
+  }
 }

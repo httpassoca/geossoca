@@ -4,7 +4,14 @@
 
 import { browser } from '$app/environment'
 import { applyDesignConfig } from 'dssoca'
-import { emptyData, type AppData, type GameEntry, type Player, type Theme } from './types'
+import {
+  emptyData,
+  type AppData,
+  type GameEntry,
+  type Player,
+  type Theme,
+  type SizeVariant,
+} from './types'
 import { pickColor } from './palette'
 
 const KEY = 'geossoca:data:v1'
@@ -28,20 +35,27 @@ class AppStore {
     } catch {
       // corrupt/missing → keep the empty default
     }
-    // Backfill colours for data saved before player colours existed.
+    // Backfill fields added in later versions of the schema.
+    if (!this.data.settings) this.data.settings = { theme: 'dark', sizeVariant: 'md' }
+    if (!this.data.settings.sizeVariant) this.data.settings.sizeVariant = 'md'
     this.data.players.forEach((p, i) => {
       if (!p.color) p.color = pickColor(i)
     })
     this.loaded = true
-    this.applyTheme()
+    this.applyDesign()
   }
 
   private save() {
     if (browser) localStorage.setItem(KEY, JSON.stringify(this.data))
   }
 
-  private applyTheme() {
-    if (browser) applyDesignConfig({ theme: this.data.settings.theme })
+  private applyDesign() {
+    if (browser) {
+      applyDesignConfig({
+        theme: this.data.settings.theme,
+        sizeVariant: this.data.settings.sizeVariant,
+      })
+    }
   }
 
   // ── players ───────────────────────────────────────────────────────────────
@@ -112,14 +126,20 @@ class AppStore {
 
   setTheme(theme: Theme) {
     this.data.settings.theme = theme
-    this.applyTheme()
+    this.applyDesign()
+    this.save()
+  }
+
+  setSize(sizeVariant: SizeVariant) {
+    this.data.settings.sizeVariant = sizeVariant
+    this.applyDesign()
     this.save()
   }
 
   /** Replace the whole dataset (used by JSON import). */
   setData(next: AppData) {
     this.data = next
-    this.applyTheme()
+    this.applyDesign()
     this.save()
   }
 

@@ -66,12 +66,17 @@ export function validateData(raw: unknown): ValidateResult {
     games.push({ id: g.id, date: g.date, entries })
   }
 
-  const theme =
-    isObj(raw.settings) && (raw.settings.theme === 'light' || raw.settings.theme === 'dark')
-      ? raw.settings.theme
-      : 'dark'
+  const s = isObj(raw.settings) ? raw.settings : {}
+  const theme = s.theme === 'light' || s.theme === 'dark' ? s.theme : 'dark'
+  const sizeVariant =
+    s.sizeVariant === 'sm' || s.sizeVariant === 'md' || s.sizeVariant === 'lg'
+      ? s.sizeVariant
+      : 'md'
 
-  return { ok: true, data: { version: SCHEMA_VERSION, players, games, settings: { theme } } }
+  return {
+    ok: true,
+    data: { version: SCHEMA_VERSION, players, games, settings: { theme, sizeVariant } },
+  }
 }
 
 /** A short human summary of an import, for the confirm dialog. */

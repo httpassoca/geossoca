@@ -1,9 +1,10 @@
 <script lang="ts">
   import 'dssoca/theme.css'
   import favicon from '$lib/assets/favicon.svg'
-  import { Topbar, Toaster, Container, Switch } from 'dssoca'
+  import { Topbar, Toaster, Container, Switch, SegmentedControl } from 'dssoca'
   import { page } from '$app/state'
   import { store } from '$lib/store.svelte'
+  import type { SizeVariant } from '$lib/types'
 
   let { children } = $props()
 
@@ -42,11 +43,24 @@
     <span class="brand">geo<span class="brand-accent">ssoca</span></span>
   {/snippet}
   {#snippet userMenu()}
-    <Switch
-      checked={isLight}
-      label="Light"
-      onchange={(v) => store.setTheme(v ? 'light' : 'dark')}
-    />
+    <div class="chrome">
+      <SegmentedControl
+        label="Size"
+        size="sm"
+        value={store.data.settings.sizeVariant}
+        options={[
+          { value: 'sm', label: 'S' },
+          { value: 'md', label: 'M' },
+          { value: 'lg', label: 'L' },
+        ]}
+        onChange={(v) => store.setSize(v as SizeVariant)}
+      />
+      <Switch
+        checked={isLight}
+        label="Light"
+        onchange={(v) => store.setTheme(v ? 'light' : 'dark')}
+      />
+    </div>
   {/snippet}
 </Topbar>
 
@@ -66,6 +80,11 @@
   }
   .brand-accent {
     color: var(--ss-primary);
+  }
+  .chrome {
+    display: flex;
+    align-items: center;
+    gap: var(--ss-s-3, 12px);
   }
   .page {
     padding-block: var(--ss-s-6, 24px);

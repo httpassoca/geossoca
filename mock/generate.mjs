@@ -67,7 +67,7 @@ for (let week = 0; week < 13; week++) {
   }
 }
 
-const data = { version: 1, players, games, settings: { theme: 'dark' } }
+const data = { version: 1, players, games, settings: { theme: 'dark', sizeVariant: 'md' } }
 
 // sanity: unique scores per game, in range
 for (const g of games) {
@@ -78,4 +78,6 @@ for (const g of games) {
 
 const out = join(dirname(fileURLToPath(import.meta.url)), 'geossoca-2026-Q1.json')
 writeFileSync(out, JSON.stringify(data, null, 2) + '\n')
-console.log(`wrote ${out}: ${players.length} players, ${games.length} games, ${games[0].date} → ${games[games.length - 1].date}`)
+console.log(
+  `wrote ${out}: ${players.length} players, ${games.length} games, ${games[0].date} → ${games[games.length - 1].date}`,
+)

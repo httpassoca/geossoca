@@ -18,7 +18,7 @@ const valid: AppData = {
       ],
     },
   ],
-  settings: { theme: 'dark' },
+  settings: { theme: 'dark', sizeVariant: 'md' },
 }
 
 describe('validateData', () => {
@@ -64,7 +64,7 @@ describe('applyImport', () => {
     version: 1,
     players: [{ id: 'a', name: 'Ada', color: '#66ef73', createdAt: '' }],
     games: [],
-    settings: { theme: 'light' },
+    settings: { theme: 'light', sizeVariant: 'md' },
   }
 
   it('replace swaps everything (deep clone)', () => {
