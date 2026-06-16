@@ -32,6 +32,6 @@
     "vitest": "^4.1.8"
   },
   "dependencies": {
-    "dssoca": "^0.10.0"
+    "dssoca": "^0.11.0"
   }
 }

@@ -38,6 +38,8 @@ class AppStore {
     // Backfill fields added in later versions of the schema.
     if (!this.data.settings) this.data.settings = { theme: 'dark', sizeVariant: 'md' }
     if (!this.data.settings.sizeVariant) this.data.settings.sizeVariant = 'md'
+    // The 'sm' size variant was retired; fold it into 'md'.
+    if (this.data.settings.sizeVariant === 'sm') this.data.settings.sizeVariant = 'md'
     this.data.players.forEach((p, i) => {
       if (!p.color) p.color = pickColor(i)
     })

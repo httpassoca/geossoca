@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Accordion, Heading, Button, MetricTile, EmptyState, Modal, Badge, toast } from 'dssoca'
+  import { Accordion, Heading, Button, Input, EmptyState, Modal, Badge, toast } from 'dssoca'
   import { store } from '$lib/store.svelte'
   import { positionsForGame, chronological } from '$lib/rankings'
   import GameForm from '$lib/components/GameForm.svelte'
@@ -14,7 +14,6 @@
 
   const gamesNewestFirst = $derived(chronological(store.data.games).reverse())
   const gamesById = $derived(new Map(gamesNewestFirst.map((g) => [g.id, g])))
-  const lastGameDate = $derived(gamesNewestFirst[0]?.date ?? '—')
 
   function longDate(date: string) {
     return new Date(date + 'T00:00:00').toLocaleDateString(undefined, {
@@ -35,8 +34,21 @@
     return store.data.players.find((p) => p.id === playerId)?.color ?? '#888'
   }
 
+  let query = $state('')
+  const q = $derived(query.trim().toLowerCase())
+  const filtered = $derived(
+    q === ''
+      ? gamesNewestFirst
+      : gamesNewestFirst.filter(
+          (g) =>
+            longDate(g.date).toLowerCase().includes(q) ||
+            g.date.includes(q) ||
+            winnerName(g).toLowerCase().includes(q),
+        ),
+  )
+
   const items = $derived(
-    gamesNewestFirst.map((g) => ({
+    filtered.map((g) => ({
       id: g.id,
       label: longDate(g.date),
       hint: `🏆 ${winnerName(g)} · ${highScore(g)}`,
@@ -68,12 +80,6 @@
   </Button>
 </header>
 
-<section class="metrics" in:reveal={{ y: 10 }}>
-  <MetricTile label="Games" value={store.data.games.length} />
-  <MetricTile label="Players" value={store.data.players.length} />
-  <MetricTile label="Last played" value={lastGameDate} />
-</section>
-
 {#if store.data.games.length === 0}
   <div in:reveal={{ y: 10, delay: 60 }}>
     <EmptyState
@@ -91,44 +97,52 @@
     </EmptyState>
   </div>
 {:else}
-  <div in:reveal={{ y: 10, delay: 60 }}>
-    <Accordion {items} multiple headingLevel={2}>
-      {#snippet header(item)}
-        {@const g = gamesById.get(item.id)}
-        <div class="hd">
-          <span class="hd-date">{item.label}</span>
-          {#if g}
-            <span class="hd-meta">🏆 {winnerName(g)} · {highScore(g)}</span>
-          {/if}
-        </div>
-      {/snippet}
-
-      {#snippet panel(item)}
-        {@const g = gamesById.get(item.id)}
-        {#if g}
-          <ol class="rows">
-            {#each positionsForGame(g) as row (row.playerId)}
-              <li>
-                <Badge tone={posTone(row.position)} label={`Position ${row.position}`}>
-                  {row.position}
-                </Badge>
-                <PlayerTag
-                  name={store.playerName(row.playerId)}
-                  color={playerColor(row.playerId)}
-                />
-                <span class="name">{store.playerName(row.playerId)}</span>
-                <span class="score">{row.score.toLocaleString()}</span>
-              </li>
-            {/each}
-          </ol>
-          <div class="actions">
-            <Button variant="ghost" size="sm" onclick={() => editGame(g)}>Edit</Button>
-            <Button variant="ghost" size="sm" onclick={() => (deleteTarget = g)}>Delete</Button>
-          </div>
-        {/if}
-      {/snippet}
-    </Accordion>
+  <div class="search" in:reveal={{ y: 10, delay: 40 }}>
+    <Input bind:value={query} placeholder="Search by date or champion" />
   </div>
+
+  {#if items.length === 0}
+    <p class="no-match" in:reveal={{ y: 10 }}>No games match “{query}”.</p>
+  {:else}
+    <div in:reveal={{ y: 10, delay: 60 }}>
+      <Accordion {items} multiple headingLevel={2}>
+        {#snippet header(item)}
+          {@const g = gamesById.get(item.id)}
+          <div class="hd">
+            <span class="hd-date">{item.label}</span>
+            {#if g}
+              <span class="hd-meta">🏆 {winnerName(g)} · {highScore(g)}</span>
+            {/if}
+          </div>
+        {/snippet}
+
+        {#snippet panel(item)}
+          {@const g = gamesById.get(item.id)}
+          {#if g}
+            <ol class="rows">
+              {#each positionsForGame(g) as row (row.playerId)}
+                <li>
+                  <Badge tone={posTone(row.position)} label={`Position ${row.position}`}>
+                    {row.position}
+                  </Badge>
+                  <PlayerTag
+                    name={store.playerName(row.playerId)}
+                    color={playerColor(row.playerId)}
+                  />
+                  <span class="name">{store.playerName(row.playerId)}</span>
+                  <span class="score">{row.score.toLocaleString()}</span>
+                </li>
+              {/each}
+            </ol>
+            <div class="actions">
+              <Button variant="ghost" size="sm" onclick={() => editGame(g)}>Edit</Button>
+              <Button variant="ghost" size="sm" onclick={() => (deleteTarget = g)}>Delete</Button>
+            </div>
+          {/if}
+        {/snippet}
+      </Accordion>
+    </div>
+  {/if}
 {/if}
 
 <GameForm bind:open={formOpen} game={editing} />
@@ -153,10 +167,12 @@
     justify-content: space-between;
     gap: var(--ss-s-3, 12px);
   }
-  .metrics {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: var(--ss-s-3, 12px);
+  .search {
+    max-width: 22rem;
+  }
+  .no-match {
+    color: var(--ss-fg-muted);
+    margin: 0;
   }
   .hd {
     display: flex;

@@ -10,18 +10,20 @@
 
   const tabs = [
     { id: 'games', label: 'Games', href: '/' },
+    { id: 'dashboard', label: 'Dashboard', href: '/dashboard' },
     { id: 'rankings', label: 'Rankings', href: '/rankings' },
-    { id: 'charts', label: 'Charts', href: '/charts' },
     { id: 'players', label: 'Players', href: '/players' },
   ]
 
   const active = $derived.by(() => {
     const p = page.url.pathname
+    if (p.startsWith('/dashboard')) return 'dashboard'
     if (p.startsWith('/rankings')) return 'rankings'
     if (p.startsWith('/players')) return 'players'
-    if (p.startsWith('/charts')) return 'charts'
     return 'games'
   })
+
+  const isDashboard = $derived(active === 'dashboard')
 
   const isLight = $derived(store.data.settings.theme === 'light')
 </script>
@@ -49,7 +51,6 @@
         size="sm"
         value={store.data.settings.sizeVariant}
         options={[
-          { value: 'sm', label: 'S' },
           { value: 'md', label: 'M' },
           { value: 'lg', label: 'L' },
         ]}
@@ -64,11 +65,19 @@
   {/snippet}
 </Topbar>
 
-<Container page>
-  <main id="main" class="page">
-    {@render children()}
-  </main>
-</Container>
+{#if isDashboard}
+  <div class="fluid-shell">
+    <main id="main" class="page">
+      {@render children()}
+    </main>
+  </div>
+{:else}
+  <Container page>
+    <main id="main" class="page">
+      {@render children()}
+    </main>
+  </Container>
+{/if}
 
 <Toaster />
 
@@ -91,5 +100,11 @@
     display: flex;
     flex-direction: column;
     gap: var(--ss-block-gap, 32px);
+  }
+  /* Dashboard breaks out of the centered max-width Container to use the full
+     viewport width, so its panels spread horizontally. */
+  .fluid-shell {
+    width: 100%;
+    padding-inline: var(--ss-s-5, 20px);
   }
 </style>
