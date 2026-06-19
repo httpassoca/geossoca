@@ -41,9 +41,9 @@
   })
 
   function parsed(id: string): number | null {
-    const raw = (scores[id] ?? '').trim()
-    if (raw === '') return null
-    const n = Number(raw)
+    const v = scores[id]
+    if (v == null || v === '') return null
+    const n = Number(v)
     return Number.isFinite(n) ? n : null
   }
 
